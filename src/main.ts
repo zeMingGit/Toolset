@@ -1,6 +1,6 @@
-import { app, BrowserWindow } from 'electron';
-import path from 'path';
-import started from 'electron-squirrel-startup';
+import { app, BrowserWindow, Menu  } from 'electron'
+import path from 'path'
+import started from 'electron-squirrel-startup'
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -15,20 +15,28 @@ const createWindow = () => {
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
-  });
+  })
 
-  // and load the index.html of the app.
+  /** 菜单栏配置 */
+  // 1. 禁用菜单栏
+  mainWindow.setMenuBarVisibility(false)  // 隐藏菜单栏
+  // 2. 设置菜单栏
+  // const emptyMenu = Menu.buildFromTemplate([])
+  // Menu.setApplicationMenu(emptyMenu) // 设置一个空菜单，去掉默认菜单
+
+
+  /** and load the index.html of the app. */
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
     mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
   } else {
     mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));
   }
 
-  // Open the DevTools.
+  /** 判断是否是开发环境打开 DevTools. */
   if (process.env.NODE_ENV === 'development') {
     mainWindow.webContents.openDevTools()
   }
-};
+}
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
