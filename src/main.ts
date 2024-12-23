@@ -12,6 +12,8 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    minWidth: 800, // 设置最小宽度
+    minHeight: 600, // 设置最小高度
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
@@ -33,9 +35,13 @@ const createWindow = () => {
   }
 
   /** 判断是否是开发环境打开 DevTools. */
-  // if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development') {
     mainWindow.webContents.openDevTools()
-  // }
+  }
+
+  mainWindow.webContents.on('context-menu', (event) => {
+    mainWindow.webContents.openDevTools({ mode: 'detach' }) // 右键点击打开控制台
+  })
 }
 
 // This method will be called when Electron has finished
