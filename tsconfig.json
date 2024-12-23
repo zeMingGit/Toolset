@@ -10,6 +10,15 @@
     "baseUrl": ".",
     "outDir": "dist",
     "moduleResolution": "node",
-    "resolveJsonModule": true
-  }
+    "resolveJsonModule": true,
+    "paths": {
+      "@/*": ["src/*"]  // 将 @ 映射到 src 目录
+    },
+    "types": ["vite/client", "vue"],
+    "typeRoots": ["./node_modules/@types/", "./types"]
+  },
+  "include": [
+    "src",
+    "types/**/*.d.ts",
+  ],
 }
