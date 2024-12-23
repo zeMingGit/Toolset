@@ -1,8 +1,8 @@
 {
   "name": "toolset",
-  "productName": "toolset",
-  "version": "1.0.0",
-  "description": "My Electron application description",
+  "productName": "Toolset",
+  "version": "0.0.0.1",
+  "description": "Toolset 工具集",
   "main": ".vite/build/main.js",
   "scripts": {
     "dev": "electron-forge start",

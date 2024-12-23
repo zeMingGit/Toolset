@@ -1,18 +1,30 @@
-import type { ForgeConfig } from '@electron-forge/shared-types';
-import { MakerSquirrel } from '@electron-forge/maker-squirrel';
-import { MakerZIP } from '@electron-forge/maker-zip';
-import { MakerDeb } from '@electron-forge/maker-deb';
-import { MakerRpm } from '@electron-forge/maker-rpm';
-import { VitePlugin } from '@electron-forge/plugin-vite';
-import { FusesPlugin } from '@electron-forge/plugin-fuses';
-import { FuseV1Options, FuseVersion } from '@electron/fuses';
+import type { ForgeConfig } from '@electron-forge/shared-types'
+import { MakerSquirrel } from '@electron-forge/maker-squirrel'
+// import { MakerZIP } from '@electron-forge/maker-zip'
+// import { MakerDeb } from '@electron-forge/maker-deb'
+// import { MakerRpm } from '@electron-forge/maker-rpm'
+import { VitePlugin } from '@electron-forge/plugin-vite'
+import { FusesPlugin } from '@electron-forge/plugin-fuses'
+import { FuseV1Options, FuseVersion } from '@electron/fuses'
 
 const config: ForgeConfig = {
   packagerConfig: {
-    asar: true,
+    name: 'toolset', // 应用程序的名称
+    executableName: 'Toolset', // 生成的可执行文件的名称
+    // appBundleId: 'com.example.toolset', // 应用程序的唯一标识符（Mac 和部分平台使用）
+    // appCategoryType: 'public.app-category.utilities', // 应用类别（Mac 使用）
+    asar: true, // 是否启用 ASAR 打包
   },
   rebuildConfig: {},
-  makers: [new MakerSquirrel({}), new MakerZIP({}, ['darwin']), new MakerRpm({}), new MakerDeb({})],
+  makers: [
+    new MakerSquirrel({
+      setupExe: 'Toolset.exe',
+      noMsi: true, // 禁用 MSI 安装包生成（可选）
+    }), // 用于 Windows 平台的默认安装包生成工具
+    // new MakerZIP({}, ['darwin']), // 生成 ZIP 压缩包，常见于 macOS（darwin）平台
+    // new MakerRpm({}), // 生成 Linux 平台的 RPM 包
+    // new MakerDeb({}), // 生成 Linux 平台的 DEB 包
+  ],
   plugins: [
     new VitePlugin({
       // `build` can specify multiple entry builds, which can be Main process, Preload scripts, Worker process, etc.
@@ -49,6 +61,6 @@ const config: ForgeConfig = {
       [FuseV1Options.OnlyLoadAppFromAsar]: true,
     }),
   ],
-};
+}
 
-export default config;
+export default config
