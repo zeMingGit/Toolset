@@ -33,9 +33,9 @@ const createWindow = () => {
   }
 
   /** 判断是否是开发环境打开 DevTools. */
-  if (process.env.NODE_ENV === 'development') {
+  // if (process.env.NODE_ENV === 'development') {
     mainWindow.webContents.openDevTools()
-  }
+  // }
 }
 
 // This method will be called when Electron has finished
