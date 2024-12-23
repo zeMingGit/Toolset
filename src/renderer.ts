@@ -27,6 +27,27 @@
  */
 import { createApp } from 'vue'
 import App from './App.vue'
-import router from './router'
 
-createApp(App).use(router).mount('#app')
+// 引入路由
+import router, { setupRouter } from './router'
+
+// 引入全局样式
+import '@/styles/index.scss'
+
+// 引入 element-plus
+import { setupElementPlus } from '@/plugins/elementPlus'
+
+// 创建实例
+const setupAll = async () => {
+  const app = createApp(App)
+
+  setupElementPlus(app)
+
+  setupRouter(app)
+
+  await router.isReady()
+
+  app.mount('#app')
+}
+
+setupAll()
